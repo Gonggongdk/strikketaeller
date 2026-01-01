@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strikketæller</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    /* Palette A – varm & rolig */
+    --bg: #f8f3ee;
+    --card: #ffffff;
+    --primary: #b97a63;      /* varm brun/rosa */
+    --primary-dark: #9a5f4b;
+    --accent: #ead9cc;       /* lys sand */
+    --accent-soft: #f3e5da;
+    --text: #3c2f2a;
+    --muted: #7a6961;
+    --success: #3b7c57;
+    --border-soft: #e2d5c9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    padding: 12px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    margin: 0 0 8px;
+    font-size: 1.8rem;
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.05rem;
+}
+
+/* Top container */
+.top-shell {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding-bottom: 8px;
+    background: linear-gradient(to bottom, rgba(248,243,238,1) 70%, rgba(248,243,238,0.7));
+}
+
+/* Card */
+.card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--border-soft);
+    margin-bottom: 12px;
+}
+
+/* Collapsible header */
+.collapse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.collapse-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.collapse-arrow {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.collapse-body {
+    margin-top: 10px;
+    display: none;
+}
+
+.card.expanded .collapse-body {
+    display: block;
+}
+
+/* Labels & inputs */
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    font-size: 1rem;
+    font-family: inherit;
+    background: #fdfaf7;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 999px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.01em;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+.btn-primary:active {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--accent-soft);
+    color: var(--text);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border-soft);
+}
+
+.btn-danger {
+    background: #c06565;
+    color: #fff;
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* Mode toggle */
+.mode-toggle {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.mode-toggle button {
+    width: auto;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+}
+
+/* Progress */
+.progress-box {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.progress-bar-outer {
+    margin-top: 6px;
+    background: #e4d3c5;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.progress-bar-inner {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Sektioner */
+#setListTitle {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 4px 0 6px;
+}
+
+.set-card {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    background: #fdfaf7;
+    margin-bottom: 8px;
+}
+
+.set-card.done {
+    background: #e7f3eb;
+    border-color: var(--success);
+}
+
+.set-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.set-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.set-status {
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.set-meta {
+    margin-top: 4px;
+    font-size: 0.9rem;
+}
+
+.set-notes {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+}
+
+.chip {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    background: #efe1d6;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+/* Avanceret elementer (styres af JS) */
+.advanced-only {
+    display: none;
+}
+
+/* Actions card */
+.actions-title {
+    font-size: 1rem;
+    margin: 0 0 6px;
+}
+
+/* Sofa mørketilstand */
+#sofaOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 22, 18, 0.92); /* varm mørk tone */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: none;
+    z-index: 200;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#sofaOverlay.visible {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+}
+
+.sofa-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.sofa-panel {
+    text-align: center;
+    color: #f8f3ee; /* varm cremefarvet tekst */
+}
+
+.sofa-project {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 6px;
+}
+
+.sofa-section {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.sofa-row {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 10px 0 4px;
+}
+
+.sofa-sub {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 24px;
+}
+
+.sofa-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.sofa-main-btn {
+    background: var(--primary);
+    color: #fff;
+    border-radius: 999px;
+    padding: 18px;
+    font-size: 1.3rem;
+    border: none;
+    width: 100%;
+}
+
+.sofa-secondary-btn {
+    background: rgba(255,255,255,0.15);
+    color: #f8f3ee;
+    border-radius: 999px;
+    padding: 14px;
+    border: none;
+    width: 100%;
+}
+
+.sofa-close {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Responsiv finjustering */
+@media (max-width: 400px) {
+    h1 {
+        font-size: 1.6rem;
+    }
+    .sofa-row {
+        font-size: 2.4rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="top-shell">
+    <h1>🧶 Strikketæller</h1>
+
+    <!-- Projekt-kort (collapsible) -->
+    <div class="card expanded" id="projectCard">
+        <div class="collapse-header" id="projectHeader">
+            <div class="collapse-title">Projekt</div>
+            <div class="collapse-arrow" id="projectArrow">▼</div>
+        </div>
+
+        <div class="collapse-body" id="projectBody">
+            <label for="projectSelect">Vælg projekt</label>
+            <select id="projectSelect"></select>
+
+            <div class="button-row">
+                <button class="btn-secondary" id="newProjectBtn">Nyt projekt</button>
+                <button class="btn-outline" id="deleteProjectBtn">Slet projekt</button>
+            </div>
+
+            <div class="mode-toggle">
+                <span id="modeLabel">Tilstand: Simpel</span>
+                <button class="btn-outline" id="modeToggleBtn">Avanceret</button>
+            </div>
+
+            <div class="progress-box" id="progressBox">
+                Ingen projekt valgt
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tilføj sektion (collapsible) -->
+<div class="card collapsed" id="addSetCard">
+    <div class="collapse-header" id="addSetHeader">
+        <div class="collapse-title">Tilføj sektion</div>
+        <div class="collapse-arrow" id="addSetArrow">▶</div>
+    </div>
+
+    <div class="collapse-body" id="addSetBody">
+        <label for="setNameInput" class="advanced-only">Sektionens navn</label>
+        <input id="setNameInput" class="advanced-only" type="text" placeholder="Fx Bærestykke, Rib, Ærme">
+
+        <label for="rowsInput">Antal rækker</label>
+        <input id="rowsInput" type="number" min="1" inputmode="numeric" placeholder="Fx 20">
+
+        <label for="stitchesInput">Antal masker pr. række</label>
+        <input id="stitchesInput" type="number" min="1" inputmode="numeric" placeholder="Fx 80">
+
+        <label for="notesInput" class="advanced-only">Noter (valgfrit)</label>
+        <textarea id="notesInput" class="advanced-only" placeholder="Fx gentag mønster, tag masker ud/ind, osv."></textarea>
+
+        <button class="btn-primary" id="addSetBtn" style="margin-top:10px;">Tilføj sektion</button>
+    </div>
+</div>
+
+<!-- Liste over sektioner -->
+<div class="card" id="setsCard">
+    <div id="setListTitle">Sektioner</div>
+    <div id="setsContainer"></div>
+</div>
+
+<!-- Rækkehandling + sofa-tilstand -->
+<div class="card">
+    <h2 class="actions-title">Rækker</h2>
+    <div class="button-row">
+        <button class="btn-primary" id="nextRowBtn">Næste række</button>
+        <button class="btn-secondary" id="undoRowBtn">Fortryd</button>
+    </div>
+    <button class="btn-outline" id="sofaModeBtn" style="margin-top:8px;">Sofa-/mørketilstand</button>
+    <p style="margin:8px 0 0;font-size:0.85rem;color:var(--muted);">
+        Brug “Næste række”, når du har strikket en række. Sofa-/mørketilstand viser kun det vigtigste i fuldskærm.
+    </p>
+</div>
+
+<!-- Sofa-/mørketilstand overlay -->
+<div id="sofaOverlay">
+    <div class="sofa-inner">
+        <div class="sofa-panel">
+            <div class="sofa-project" id="sofaProjectName"></div>
+            <div class="sofa-section" id="sofaSectionName"></div>
+            <div class="sofa-row" id="sofaRowText">Række 0</div>
+            <div class="sofa-sub" id="sofaSubText"></div>
+
+            <div class="sofa-buttons">
+                <button class="sofa-main-btn" id="sofaNextBtn">Næste række</button>
+                <button class="sofa-secondary-btn" id="sofaUndoBtn">Fortryd</button>
+            </div>
+
+            <div class="sofa-close" id="sofaCloseBtn">Luk</div>
+        </div>
+    </div>
+</div>
+
+<script>
+const app = {
+    projects: {},
+    currentProjectId: null,
+    advancedMode: false,
+    els: {},
+
+    init() {
+        this.cacheElements();
+        this.load();
+        this.bindEvents();
+        this.initCollapsibles();
+        this.renderProjectsSelect();
+        this.applyMode();
+        this.updateUI();
+    },
+
+    cacheElements() {
+        this.els.projectCard      = document.getElementById("projectCard");
+        this.els.projectHeader    = document.getElementById("projectHeader");
+        this.els.projectArrow     = document.getElementById("projectArrow");
+        this.els.projectBody      = document.getElementById("projectBody");
+
+        this.els.addSetCard       = document.getElementById("addSetCard");
+        this.els.addSetHeader     = document.getElementById("addSetHeader");
+        this.els.addSetArrow      = document.getElementById("addSetArrow");
+        this.els.addSetBody       = document.getElementById("addSetBody");
+
+        this.els.projectSelect    = document.getElementById("projectSelect");
+        this.els.newProjectBtn    = document.getElementById("newProjectBtn");
+        this.els.deleteProjectBtn = document.getElementById("deleteProjectBtn");
+
+        this.els.modeToggleBtn    = document.getElementById("modeToggleBtn");
+        this.els.modeLabel        = document.getElementById("modeLabel");
+        this.els.progressBox      = document.getElementById("progressBox");
+
+        this.els.setNameInput     = document.getElementById("setNameInput");
+        this.els.rowsInput        = document.getElementById("rowsInput");
+        this.els.stitchesInput    = document.getElementById("stitchesInput");
+        this.els.notesInput       = document.getElementById("notesInput");
+        this.els.addSetBtn        = document.getElementById("addSetBtn");
+
+        this.els.setsContainer    = document.getElementById("setsContainer");
+
+        this.els.nextRowBtn       = document.getElementById("nextRowBtn");
+        this.els.undoRowBtn       = document.getElementById("undoRowBtn");
+        this.els.sofaModeBtn      = document.getElementById("sofaModeBtn");
+
+        this.els.advancedOnly     = document.querySelectorAll(".advanced-only");
+
+        this.els.sofaOverlay      = document.getElementById("sofaOverlay");
+        this.els.sofaProjectName  = document.getElementById("sofaProjectName");
+        this.els.sofaSectionName  = document.getElementById("sofaSectionName");
+        this.els.sofaRowText      = document.getElementById("sofaRowText");
+        this.els.sofaSubText      = document.getElementById("sofaSubText");
+        this.els.sofaNextBtn      = document.getElementById("sofaNextBtn");
+        this.els.sofaUndoBtn      = document.getElementById("sofaUndoBtn");
+        this.els.sofaCloseBtn     = document.getElementById("sofaCloseBtn");
+    },
+
+    bindEvents() {
+        this.els.newProjectBtn.addEventListener("click", () => this.createProject());
+        this.els.deleteProjectBtn.addEventListener("click", () => this.deleteProject());
+
+        this.els.projectSelect.addEventListener("change", () => {
+            this.currentProjectId = this.els.projectSelect.value || null;
+            this.save();
+            this.updateUI();
+        });
+
+        this.els.modeToggleBtn.addEventListener("click", () => {
+            this.advancedMode = !this.advancedMode;
+            this.applyMode();
+        });
+
+        this.els.addSetBtn.addEventListener("click", () => this.addSet());
+
+        this.els.nextRowBtn.addEventListener("click", () => {
+            this.markNextRow();
+            this.updateUI();
+        });
+
+        this.els.undoRowBtn.addEventListener("click", () => {
+            this.undoRow();
+            this.updateUI();
+        });
+
+        this.els.sofaModeBtn.addEventListener("click", () => this.openSofaMode());
+        this.els.sofaNextBtn.addEventListener("click", () => {
+            this.markNextRow();
+            this.updateUI();
+            this.updateSofaOverlay();
+        });
+        this.els.sofaUndoBtn.addEventListener("click", () => {
+            this.undoRow();
+            this.updateUI();
+            this.updateSofaOverlay();
+        });
+        this.els.sofaCloseBtn.addEventListener("click", () => this.closeSofaMode());
+        this.els.sofaOverlay.addEventListener("click", (e) => {
+            if (e.target === this.els.sofaOverlay) this.closeSofaMode();
+        });
+    },
+
+    initCollapsibles() {
+        // Projekt start: åben
+        this.els.projectCard.classList.add("expanded");
+        this.els.projectBody.style.display = "block";
+        this.els.projectArrow.textContent = "▼";
+
+        // Tilføj sektion start: lukket
+        this.els.addSetCard.classList.remove("expanded");
+        this.els.addSetBody.style.display = "none";
+        this.els.addSetArrow.textContent = "▶";
+
+        this.els.projectHeader.addEventListener("click", () => {
+            const isExpanded = this.els.projectCard.classList.contains("expanded");
+            this.toggleCard(this.els.projectCard, this.els.projectBody, this.els.projectArrow, isExpanded);
+        });
+
+        this.els.addSetHeader.addEventListener("click", () => {
+            const isExpanded = this.els.addSetCard.classList.contains("expanded");
+            this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, isExpanded);
+        });
+    },
+
+    toggleCard(card, body, arrow, isExpanded) {
+        if (isExpanded) {
+            card.classList.remove("expanded");
+            body.style.display = "none";
+            arrow.textContent = "▶";
+        } else {
+            card.classList.add("expanded");
+            body.style.display = "block";
+            arrow.textContent = "▼";
+        }
+    },
+
+    load() {
+        const saved = localStorage.getItem("stitch_app_v4");
+        if (!saved) return;
+        try {
+            const parsed = JSON.parse(saved);
+            this.projects = parsed.projects || {};
+            this.currentProjectId = parsed.currentProjectId || null;
+            this.advancedMode = !!parsed.advancedMode;
+        } catch (e) {
+            this.projects = {};
+            this.currentProjectId = null;
+            this.advancedMode = false;
+        }
+    },
+
+    save() {
+        const payload = {
+            projects: this.projects,
+            currentProjectId: this.currentProjectId,
+            advancedMode: this.advancedMode
+        };
+        localStorage.setItem("stitch_app_v4", JSON.stringify(payload));
+    },
+
+    applyMode() {
+        this.els.modeLabel.textContent = this.advancedMode ? "Tilstand: Avanceret" : "Tilstand: Simpel";
+        this.els.modeToggleBtn.textContent = this.advancedMode ? "Simpel" : "Avanceret";
+
+        this.els.advancedOnly.forEach(el => {
+            el.style.display = this.advancedMode ? "block" : "none";
+        });
+
+        this.save();
+        this.updateUI();
+    },
+
+    createProject() {
+        const name = prompt("Navn på projekt?");
+        if (!name) return;
+
+        const id = "p_" + Date.now();
+        this.projects[id] = {
+            name: name.trim(),
+            sets: []
+        };
+        this.currentProjectId = id;
+        this.save();
+        this.renderProjectsSelect();
+        this.updateUI();
+    },
+
+    deleteProject() {
+        if (!this.currentProjectId) return;
+        const p = this.projects[this.currentProjectId];
+        const ok = confirm(`Vil du slette projektet "${p.name}"?`);
+        if (!ok) return;
+        delete this.projects[this.currentProjectId];
+        this.currentProjectId = null;
+        this.save();
+        this.renderProjectsSelect();
+        this.updateUI();
+    },
+
+    renderProjectsSelect() {
+        const select = this.els.projectSelect;
+        select.innerHTML = "";
+        const ids = Object.keys(this.projects);
+
+        if (!ids.length) {
+            const opt = document.createElement("option");
+            opt.value = "";
+            opt.textContent = "Ingen projekter endnu";
+            select.appendChild(opt);
+            select.disabled = true;
+            return;
+        }
+
+        select.disabled = false;
+        ids.forEach(id => {
+            const p = this.projects[id];
+            const opt = document.createElement("option");
+            opt.value = id;
+            opt.textContent = p.name || "Uden navn";
+            select.appendChild(opt);
+        });
+
+        if (!this.currentProjectId || !this.projects[this.currentProjectId]) {
+            this.currentProjectId = ids[0];
+        }
+        select.value = this.currentProjectId;
+    },
+
+    addSet() {
+        if (!this.currentProjectId) {
+            alert("Vælg eller opret et projekt først.");
+            return;
+        }
+
+        const rows = parseInt(this.els.rowsInput.value, 10);
+        const stitches = parseInt(this.els.stitchesInput.value, 10);
+
+        if (!rows || rows <= 0) {
+            alert("Angiv et gyldigt antal rækker (mindst 1).");
+            return;
+        }
+        if (!stitches || stitches <= 0) {
+            alert("Angiv et gyldigt antal masker pr. række (mindst 1).");
+            return;
+        }
+
+        const p = this.projects[this.currentProjectId];
+        const nameInput = this.els.setNameInput.value.trim();
+        const name = nameInput || `Sektion ${p.sets.length + 1}`;
+        const notes = this.advancedMode ? (this.els.notesInput.value.trim() || "") : "";
+
+        const set = {
+            name,
+            rows,
+            stitches,
+            done: 0,
+            notes
+        };
+
+        p.sets.push(set);
+
+        this.els.rowsInput.value = "";
+        this.els.stitchesInput.value = "";
+        this.els.setNameInput.value = "";
+        this.els.notesInput.value = "";
+
+        this.save();
+        this.updateUI();
+    },
+
+    /* Hjælpere til rækker */
+    getActiveSet(p) {
+        return p.sets.find(s => s.done < s.rows) || null;
+    },
+
+    getLastDoneSet(p) {
+        for (let i = p.sets.length - 1; i >= 0; i--) {
+            if (p.sets[i].done > 0) return p.sets[i];
+        }
+        return null;
+    },
+
+    markNextRow() {
+        if (!this.currentProjectId) return;
+        const p = this.projects[this.currentProjectId];
+        if (!p.sets.length) return;
+
+        const active = this.getActiveSet(p);
+        if (!active) {
+            alert("Alle rækker i projektet er allerede færdige.");
+            return;
+        }
+
+        if (active.done < active.rows) {
+            active.done += 1;
+        }
+
+        this.save();
+    },
+
+    undoRow() {
+        if (!this.currentProjectId) return;
+        const p = this.projects[this.currentProjectId];
+        if (!p.sets.length) return;
+
+        const last = this.getLastDoneSet(p);
+        if (!last) return;
+
+        last.done = Math.max(0, last.done - 1);
+        this.save();
+    },
+
+    getProjectSummary(p) {
+        let totalRows = 0;
+        let doneRows = 0;
+        p.sets.forEach(s => {
+            totalRows += s.rows;
+            doneRows += Math.min(s.done, s.rows);
+        });
+        const pct = totalRows === 0 ? 0 : Math.round((doneRows / totalRows) * 100);
+        return { totalRows, doneRows, pct };
+    },
+
+    updateUI() {
+        const progressBox = this.els.progressBox;
+        const container = this.els.setsContainer;
+        container.innerHTML = "";
+
+        if (!this.currentProjectId || !this.projects[this.currentProjectId]) {
+            progressBox.textContent = "Ingen projekt valgt";
+            this.setButtonsDisabled(true);
+            return;
+        }
+
+        const p = this.projects[this.currentProjectId];
+        const { totalRows, doneRows, pct } = this.getProjectSummary(p);
+
+        progressBox.innerHTML = `
+            ${doneRows} / ${totalRows} rækker færdige (${pct}%)
+            <div class="progress-bar-outer">
+                <div class="progress-bar-inner" style="width:${pct}%;"></div>
+            </div>
+        `;
+
+        p.sets.forEach((s, index) => {
+            const card = document.createElement("div");
+            const done = Math.min(s.done, s.rows);
+            const setPct = s.rows === 0 ? 0 : Math.round(done / s.rows * 100);
+
+            card.className = "set-card" + (done >= s.rows ? " done" : "");
+
+            const header = document.createElement("div");
+            header.className = "set-header";
+
+            const nameEl = document.createElement("div");
+            nameEl.className = "set-name";
+            nameEl.textContent = s.name || `Sektion ${index + 1}`;
+
+            const statusEl = document.createElement("div");
+            statusEl.className = "set-status";
+            statusEl.textContent = `${done} / ${s.rows} rækker`;
+
+            header.appendChild(nameEl);
+            header.appendChild(statusEl);
+
+            const meta = document.createElement("div");
+            meta.className = "set-meta";
+            meta.innerHTML = `
+                ${s.rows} rækker × ${s.stitches} masker
+                <div>
+                    <span class="chip">${setPct}% af sektionen</span>
+                </div>
+            `;
+
+            card.appendChild(header);
+            card.appendChild(meta);
+
+            if (this.advancedMode && s.notes) {
+                const notes = document.createElement("div");
+                notes.className = "set-notes";
+                notes.textContent = s.notes;
+                card.appendChild(notes);
+            }
+
+            container.appendChild(card);
+        });
+
+        this.setButtonsDisabled(!p.sets.length);
+    },
+
+    setButtonsDisabled(disabled) {
+        this.els.nextRowBtn.disabled = disabled;
+        this.els.undoRowBtn.disabled = disabled;
+        this.els.sofaModeBtn.disabled = disabled;
+    },
+
+    /* Sofa-/mørketilstand */
+    openSofaMode() {
+        if (!this.currentProjectId || !this.projects[this.currentProjectId]) return;
+        const p = this.projects[this.currentProjectId];
+        if (!p.sets.length) return;
+
+        this.updateSofaOverlay();
+
+        this.els.sofaOverlay.style.display = "block";
+        requestAnimationFrame(() => {
+            this.els.sofaOverlay.classList.add("visible");
+        });
+    },
+
+    closeSofaMode() {
+        this.els.sofaOverlay.classList.remove("visible");
+        setTimeout(() => {
+            this.els.sofaOverlay.style.display = "none";
+        }, 250);
+    },
+
+    updateSofaOverlay() {
+        if (!this.currentProjectId || !this.projects[this.currentProjectId]) return;
+        const p = this.projects[this.currentProjectId];
+        const { totalRows, doneRows } = this.getProjectSummary(p);
+        const active = this.getActiveSet(p);
+
+        this.els.sofaProjectName.textContent = p.name || "Projekt";
+
+        if (!active) {
+            this.els.sofaSectionName.textContent = "Alle sektioner færdige";
+            this.els.sofaRowText.textContent = "🎉";
+            this.els.sofaSubText.textContent = `${doneRows} / ${totalRows} rækker færdige`;
+            this.els.sofaNextBtn.disabled = true;
+            this.els.sofaUndoBtn.disabled = doneRows === 0;
+            return;
+        }
+
+        this.els.sofaSectionName.textContent = active.name;
+        this.els.sofaRowText.textContent = `Række ${active.done + 1}`;
+        this.els.sofaSubText.textContent = `${active.done} / ${active.rows} rækker • ${active.stitches} masker`;
+
+        this.els.sofaNextBtn.disabled = false;
+        this.els.sofaUndoBtn.disabled = doneRows === 0;
+    }
+};
+
+app.init();
+</script>
+
+</body>
+</html>
