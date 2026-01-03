@@ -239,6 +239,7 @@ button:disabled {
     justify-content: space-between;
     align-items: baseline;
     gap: 8px;
+    width: 100%;
 }
 
 .set-name {
@@ -272,6 +273,29 @@ button:disabled {
     background: #efe1d6;
     color: var(--muted);
     margin-top: 3px;
+}
+
+/* Actions per set (indsæt / slet) */
+.set-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-left: 10px;
+}
+.small-btn {
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    border: 1px solid var(--border-soft);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+.small-btn:hover { opacity: 0.95; }
+.small-btn.danger {
+    background: #c06565;
+    color: #fff;
+    border-color: #b24f4f;
 }
 
 /* Avanceret elementer (styres af JS) */
@@ -383,6 +407,24 @@ button:disabled {
     .sofa-row {
         font-size: 2.4rem;
     }
+
+    /* Småknapper justering på mobil: gør dem lettere at tappe */
+    .small-btn {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .set-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+    .set-header > div:last-child {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 </style>
 </head>
@@ -420,15 +462,16 @@ button:disabled {
 </div>
 
 <!-- Tilføj sektion (collapsible) -->
-<div class="card collapsed" id="addSetCard">
+<div class="card collapsed" id="addSetCard" aria-expanded="false">
     <div class="collapse-header" id="addSetHeader">
         <div class="collapse-title">Tilføj sektion</div>
         <div class="collapse-arrow" id="addSetArrow">▶</div>
     </div>
 
     <div class="collapse-body" id="addSetBody">
-        <label for="setNameInput" class="advanced-only">Sektionens navn</label>
-        <input id="setNameInput" class="advanced-only" type="text" placeholder="Fx Bærestykke, Rib, Ærme">
+        <!-- Navn vises som standard (bedre mobil UX) -->
+        <label for="setNameInput">Sektionens navn</label>
+        <input id="setNameInput" type="text" placeholder="Fx Bærestykke, Rib, Ærme">
 
         <label for="rowsInput">Antal rækker</label>
         <input id="rowsInput" type="number" min="1" inputmode="numeric" placeholder="Fx 20">
@@ -439,7 +482,10 @@ button:disabled {
         <label for="notesInput" class="advanced-only">Noter (valgfrit)</label>
         <textarea id="notesInput" class="advanced-only" placeholder="Fx gentag mønster, tag masker ud/ind, osv."></textarea>
 
-        <button class="btn-primary" id="addSetBtn" style="margin-top:10px;">Tilføj sektion</button>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+            <button class="btn-primary" id="addSetBtn">Tilføj sektion</button>
+            <button class="btn-outline" id="cancelAddSetBtn">Annuller</button>
+        </div>
     </div>
 </div>
 
@@ -486,6 +532,7 @@ const app = {
     projects: {},
     currentProjectId: null,
     advancedMode: false,
+    insertionIndex: null, // når man indsætter en ny sektion: indsæt efter dette index
     els: {},
 
     init() {
@@ -522,6 +569,7 @@ const app = {
         this.els.stitchesInput    = document.getElementById("stitchesInput");
         this.els.notesInput       = document.getElementById("notesInput");
         this.els.addSetBtn        = document.getElementById("addSetBtn");
+        this.els.cancelAddSetBtn  = document.getElementById("cancelAddSetBtn");
 
         this.els.setsContainer    = document.getElementById("setsContainer");
 
@@ -557,6 +605,7 @@ const app = {
         });
 
         this.els.addSetBtn.addEventListener("click", () => this.addSet());
+        this.els.cancelAddSetBtn.addEventListener("click", () => this.cancelAddSet());
 
         this.els.nextRowBtn.addEventListener("click", () => {
             this.markNextRow();
@@ -612,10 +661,12 @@ const app = {
             card.classList.remove("expanded");
             body.style.display = "none";
             arrow.textContent = "▶";
+            card.setAttribute('aria-expanded','false');
         } else {
             card.classList.add("expanded");
             body.style.display = "block";
             arrow.textContent = "▼";
+            card.setAttribute('aria-expanded','true');
         }
     },
 
@@ -731,7 +782,8 @@ const app = {
 
         const p = this.projects[this.currentProjectId];
         const nameInput = this.els.setNameInput.value.trim();
-        const name = nameInput || `Sektion ${p.sets.length + 1}`;
+        const defaultName = this.insertionIndex !== null ? `Sektion ${this.insertionIndex + 2}` : `Sektion ${p.sets.length + 1}`;
+        const name = nameInput || defaultName;
         const notes = this.advancedMode ? (this.els.notesInput.value.trim() || "") : "";
 
         const set = {
@@ -742,15 +794,39 @@ const app = {
             notes
         };
 
-        p.sets.push(set);
+        if (this.insertionIndex === null) {
+            p.sets.push(set);
+        } else {
+            // indsæt efter insertionIndex
+            p.sets.splice(this.insertionIndex + 1, 0, set);
+        }
 
+        // ryd formular
         this.els.rowsInput.value = "";
         this.els.stitchesInput.value = "";
         this.els.setNameInput.value = "";
         this.els.notesInput.value = "";
+        this.insertionIndex = null;
+
+        // luk add-card og opdater
+        if (this.els.addSetCard.classList.contains("expanded")) {
+            this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, true);
+        }
 
         this.save();
         this.updateUI();
+    },
+
+    cancelAddSet() {
+        this.insertionIndex = null;
+        this.els.rowsInput.value = "";
+        this.els.stitchesInput.value = "";
+        this.els.setNameInput.value = "";
+        this.els.notesInput.value = "";
+        // luk add-card
+        if (this.els.addSetCard.classList.contains("expanded")) {
+            this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, true);
+        }
     },
 
     /* Hjælpere til rækker */
@@ -841,12 +917,46 @@ const app = {
             nameEl.className = "set-name";
             nameEl.textContent = s.name || `Sektion ${index + 1}`;
 
+            // højre side indeholder status + handlinger
+            const rightSide = document.createElement("div");
+            rightSide.style.display = "flex";
+            rightSide.style.alignItems = "center";
+            rightSide.style.gap = "8px";
+
             const statusEl = document.createElement("div");
             statusEl.className = "set-status";
             statusEl.textContent = `${done} / ${s.rows} rækker`;
 
+            // actions: åbner inline "Tilføj sektion" med forudfyldte værdier, eller slet
+            const actions = document.createElement("div");
+            actions.className = "set-actions";
+
+            const insertBtn = document.createElement("button");
+            insertBtn.className = "small-btn";
+            insertBtn.textContent = "Indsæt";
+            insertBtn.title = "Indsæt en ny sektion efter denne";
+            insertBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                this.openInsertForm(index);
+            });
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "small-btn danger";
+            deleteBtn.textContent = "Slet";
+            deleteBtn.title = "Slet denne sektion";
+            deleteBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                this.deleteSet(index);
+            });
+
+            actions.appendChild(insertBtn);
+            actions.appendChild(deleteBtn);
+
+            rightSide.appendChild(statusEl);
+            rightSide.appendChild(actions);
+
             header.appendChild(nameEl);
-            header.appendChild(statusEl);
+            header.appendChild(rightSide);
 
             const meta = document.createElement("div");
             meta.className = "set-meta";
@@ -877,6 +987,42 @@ const app = {
         this.els.nextRowBtn.disabled = disabled;
         this.els.undoRowBtn.disabled = disabled;
         this.els.sofaModeBtn.disabled = disabled;
+    },
+
+    /* Tilføj / indsæt / slet sektioner (mobil-optimeret: inline formular) */
+    openInsertForm(index) {
+        if (!this.currentProjectId) return;
+        const p = this.projects[this.currentProjectId];
+        this.insertionIndex = index;
+
+        // forudfyld felter med fornuftige værdier
+        const suggestedName = `Sektion ${index + 2}`;
+        this.els.setNameInput.value = suggestedName;
+        this.els.rowsInput.value = "";
+        this.els.stitchesInput.value = "";
+
+        // sørg for add-card er åben og fokuser på rækker (mobil: viser keyboard)
+        if (!this.els.addSetCard.classList.contains("expanded")) {
+            this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, false);
+        }
+
+        // scroll add-card i midten af viewport og fokus input
+        setTimeout(() => {
+            this.els.addSetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            this.els.rowsInput.focus();
+        }, 120);
+    },
+
+    deleteSet(index) {
+        if (!this.currentProjectId) return;
+        const p = this.projects[this.currentProjectId];
+        const s = p.sets[index];
+        if (!s) return;
+        const ok = confirm(`Vil du slette sektionen "${s.name}"?`);
+        if (!ok) return;
+        p.sets.splice(index, 1);
+        this.save();
+        this.updateUI();
     },
 
     /* Sofa-/mørketilstand */
