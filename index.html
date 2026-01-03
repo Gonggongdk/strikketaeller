@@ -11,12 +11,11 @@
 
 <style>
 :root {
-    /* Palette A – varm & rolig */
     --bg: #f8f3ee;
     --card: #ffffff;
-    --primary: #b97a63;      /* varm brun/rosa */
+    --primary: #b97a63;
     --primary-dark: #9a5f4b;
-    --accent: #ead9cc;       /* lys sand */
+    --accent: #ead9cc;
     --accent-soft: #f3e5da;
     --text: #3c2f2a;
     --muted: #7a6961;
@@ -24,9 +23,7 @@
     --border-soft: #e2d5c9;
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -39,26 +36,11 @@ body {
     margin-right: auto;
 }
 
-h1 {
-    margin: 0 0 8px;
-    font-size: 1.8rem;
-    text-align: center;
-    letter-spacing: 0.02em;
-}
-
-h2 {
-    margin: 0;
-    font-size: 1.05rem;
-}
+h1 { margin: 0 0 8px; font-size: 1.8rem; text-align: center; letter-spacing: 0.02em; }
+h2 { margin: 0; font-size: 1.05rem; }
 
 /* Top container */
-.top-shell {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    padding-bottom: 8px;
-    background: linear-gradient(to bottom, rgba(248,243,238,1) 70%, rgba(248,243,238,0.7));
-}
+.top-shell { position: sticky; top: 0; z-index: 20; padding-bottom: 8px; background: linear-gradient(to bottom, rgba(248,243,238,1) 70%, rgba(248,243,238,0.7)); }
 
 /* Card */
 .card {
@@ -71,360 +53,107 @@ h2 {
 }
 
 /* Collapsible header */
-.collapse-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    gap: 8px;
-}
-
-.collapse-title {
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.collapse-arrow {
-    font-size: 0.9rem;
-    color: var(--muted);
-}
-
-.collapse-body {
-    margin-top: 10px;
-    display: none;
-}
-
-.card.expanded .collapse-body {
-    display: block;
-}
+.collapse-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 8px; }
+.collapse-title { font-weight: 600; font-size: 1rem; }
+.collapse-arrow { font-size: 0.9rem; color: var(--muted); }
+.collapse-body { margin-top: 10px; display: none; }
+.card.expanded .collapse-body { display: block; }
 
 /* Labels & inputs */
-label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: block;
-    margin-top: 8px;
-    color: var(--muted);
-}
-
+label { font-weight: 600; font-size: 0.9rem; display: block; margin-top: 8px; color: var(--muted); }
 input, select, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-top: 4px;
-    border-radius: 12px;
-    border: 1px solid var(--border-soft);
-    font-size: 1rem;
-    font-family: inherit;
-    background: #fdfaf7;
+    width: 100%; padding: 12px; margin-top: 4px; border-radius: 12px; border: 1px solid var(--border-soft);
+    font-size: 1rem; font-family: inherit; background: #fdfaf7;
 }
-
-textarea {
-    resize: vertical;
-    min-height: 60px;
-}
+textarea { resize: vertical; min-height: 60px; }
 
 /* Buttons */
 button {
-    width: 100%;
-    padding: 14px;
-    border-radius: 999px;
-    border: none;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
+    width: 100%; padding: 14px; border-radius: 999px; border: none; font-size: 1rem; font-weight: 600; cursor: pointer;
     letter-spacing: 0.01em;
 }
-
-.btn-primary {
-    background: var(--primary);
-    color: #fff;
-}
-.btn-primary:active {
-    background: var(--primary-dark);
-}
-
-.btn-secondary {
-    background: var(--accent-soft);
-    color: var(--text);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border-soft);
-}
-
-.btn-danger {
-    background: #c06565;
-    color: #fff;
-}
-
-button:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-}
-
-.button-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 8px;
-}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:active { background: var(--primary-dark); }
+.btn-secondary { background: var(--accent-soft); color: var(--text); }
+.btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border-soft); }
+.btn-danger { background: #c06565; color: #fff; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
 
 /* Mode toggle */
-.mode-toggle {
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--muted);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.mode-toggle button {
-    width: auto;
-    padding: 6px 14px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-}
+.mode-toggle { margin-top: 10px; font-size: 0.85rem; color: var(--muted); display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.mode-toggle button { width: auto; padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; }
 
 /* Progress */
-.progress-box {
-    margin-top: 10px;
-    padding: 10px;
-    background: var(--accent-soft);
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.progress-bar-outer {
-    margin-top: 6px;
-    background: #e4d3c5;
-    border-radius: 999px;
-    height: 8px;
-    overflow: hidden;
-}
-
-.progress-bar-inner {
-    height: 100%;
-    background: var(--primary);
-    width: 0%;
-    transition: width 0.3s ease;
-}
+.progress-box { margin-top: 10px; padding: 10px; background: var(--accent-soft); border-radius: 12px; font-size: 0.9rem; font-weight: 600; }
+.progress-bar-outer { margin-top: 6px; background: #e4d3c5; border-radius: 999px; height: 8px; overflow: hidden; }
+.progress-bar-inner { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
 
 /* Sektioner */
-#setListTitle {
-    font-weight: 600;
-    font-size: 1rem;
-    margin: 4px 0 6px;
+#setListTitle { font-weight: 600; font-size: 1rem; margin: 4px 0 6px; }
+
+.set-card { padding: 12px; border-radius: 12px; border: 1px solid var(--border-soft); background: #fdfaf7; margin-bottom: 8px; transition: all 0.18s ease; }
+.set-card.done { background: #e7f3eb; border-color: var(--success); }
+
+/* Collapsed styling: skjul detaljer men behold header */
+.set-card.collapsed { padding: 8px 12px; opacity: 0.95; }
+.set-card.collapsed .set-meta,
+.set-card.collapsed .set-notes,
+.set-card.collapsed .timestamps-toggle,
+.set-card.collapsed .timestamps-list {
+    display: none;
 }
 
-.set-card {
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border-soft);
-    background: #fdfaf7;
-    margin-bottom: 8px;
-}
+/* Header / status */
+.set-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 100%; cursor: pointer; }
+.set-name { font-weight: 600; font-size: 1rem; }
+.set-status { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+.set-meta { margin-top: 4px; font-size: 0.9rem; }
+.set-notes { margin-top: 6px; font-size: 0.85rem; color: var(--muted); font-style: italic; }
 
-.set-card.done {
-    background: #e7f3eb;
-    border-color: var(--success);
-}
-
-.set-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 8px;
-    width: 100%;
-}
-
-.set-name {
-    font-weight: 600;
-    font-size: 1rem;
-}
-
-.set-status {
-    font-size: 0.85rem;
-    color: var(--muted);
-    white-space: nowrap;
-}
-
-.set-meta {
-    margin-top: 4px;
-    font-size: 0.9rem;
-}
-
-.set-notes {
-    margin-top: 6px;
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-}
-
-.chip {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 999px;
-    font-size: 0.75rem;
-    background: #efe1d6;
-    color: var(--muted);
-    margin-top: 3px;
-}
+.chip { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.75rem; background: #efe1d6; color: var(--muted); margin-top: 3px; }
 
 /* Actions per set (indsæt / slet) */
-.set-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-left: 10px;
-}
-.small-btn {
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    border: 1px solid var(--border-soft);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-}
+.set-actions { display: flex; gap: 8px; align-items: center; margin-left: 10px; }
+.small-btn { padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; border: 1px solid var(--border-soft); background: transparent; color: var(--muted); cursor: pointer; }
 .small-btn:hover { opacity: 0.95; }
-.small-btn.danger {
-    background: #c06565;
-    color: #fff;
-    border-color: #b24f4f;
-}
+.small-btn.danger { background: #c06565; color: #fff; border-color: #b24f4f; }
+
+/* Timestamps list */
+.timestamps-toggle { margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; }
+.timestamps-toggle button { width: auto; padding: 6px 10px; border-radius: 999px; font-size: 0.8rem; background: transparent; border: 1px solid var(--border-soft); color: var(--muted); cursor: pointer; }
+.timestamps-list { margin-top: 8px; border-radius: 8px; padding: 8px; background: #fff7f2; border: 1px solid var(--border-soft); display: none; font-size: 0.9rem; }
+.timestamps-list.visible { display: block; }
+.timestamp-item { padding: 6px 4px; border-bottom: 1px dashed rgba(0,0,0,0.04); }
+.timestamp-item:last-child { border-bottom: none; }
 
 /* Avanceret elementer (styres af JS) */
-.advanced-only {
-    display: none;
-}
+.advanced-only { display: none; }
 
 /* Actions card */
-.actions-title {
-    font-size: 1rem;
-    margin: 0 0 6px;
-}
+.actions-title { font-size: 1rem; margin: 0 0 6px; }
 
 /* Sofa mørketilstand */
-#sofaOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(30, 22, 18, 0.92); /* varm mørk tone */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: none;
-    z-index: 200;
-    opacity: 0;
-    transform: scale(1.02);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#sofaOverlay.visible {
-    display: block;
-    opacity: 1;
-    transform: scale(1);
-}
-
-.sofa-inner {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.sofa-panel {
-    text-align: center;
-    color: #f8f3ee; /* varm cremefarvet tekst */
-}
-
-.sofa-project {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    margin-bottom: 6px;
-}
-
-.sofa-section {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 6px;
-}
-
-.sofa-row {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 10px 0 4px;
-}
-
-.sofa-sub {
-    font-size: 1rem;
-    opacity: 0.8;
-    margin-bottom: 24px;
-}
-
-.sofa-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.sofa-main-btn {
-    background: var(--primary);
-    color: #fff;
-    border-radius: 999px;
-    padding: 18px;
-    font-size: 1.3rem;
-    border: none;
-    width: 100%;
-}
-
-.sofa-secondary-btn {
-    background: rgba(255,255,255,0.15);
-    color: #f8f3ee;
-    border-radius: 999px;
-    padding: 14px;
-    border: none;
-    width: 100%;
-}
-
-.sofa-close {
-    font-size: 0.9rem;
-    opacity: 0.7;
-    cursor: pointer;
-    margin-top: 10px;
-}
+#sofaOverlay { position: fixed; inset: 0; background: rgba(30, 22, 18, 0.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; z-index: 200; opacity: 0; transform: scale(1.02); transition: opacity 0.25s ease, transform 0.25s ease; }
+#sofaOverlay.visible { display: block; opacity: 1; transform: scale(1); }
+.sofa-inner { height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.sofa-panel { text-align: center; color: #f8f3ee; }
+.sofa-project { font-size: 0.9rem; opacity: 0.8; margin-bottom: 6px; }
+.sofa-section { font-size: 1.4rem; font-weight: 600; margin-bottom: 6px; }
+.sofa-row { font-size: 3rem; font-weight: 700; margin: 10px 0 4px; }
+.sofa-sub { font-size: 1rem; opacity: 0.8; margin-bottom: 24px; }
+.sofa-buttons { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 20px; }
+.sofa-main-btn { background: var(--primary); color: #fff; border-radius: 999px; padding: 18px; font-size: 1.3rem; border: none; width: 100%; }
+.sofa-secondary-btn { background: rgba(255,255,255,0.15); color: #f8f3ee; border-radius: 999px; padding: 14px; border: none; width: 100%; }
+.sofa-close { font-size: 0.9rem; opacity: 0.7; cursor: pointer; margin-top: 10px; }
 
 /* Responsiv finjustering */
 @media (max-width: 400px) {
-    h1 {
-        font-size: 1.6rem;
-    }
-    .sofa-row {
-        font-size: 2.4rem;
-    }
-
-    /* Småknapper justering på mobil: gør dem lettere at tappe */
-    .small-btn {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-    }
-
-    .set-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-    }
-    .set-header > div:last-child {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    h1 { font-size: 1.6rem; }
+    .sofa-row { font-size: 2.4rem; }
+    .small-btn { padding: 10px 12px; font-size: 0.9rem; }
+    .set-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .set-header > div:last-child { width: 100%; display: flex; justify-content: space-between; align-items: center; }
 }
 </style>
 </head>
@@ -469,16 +198,12 @@ button:disabled {
     </div>
 
     <div class="collapse-body" id="addSetBody">
-        <!-- Navn vises som standard (bedre mobil UX) -->
         <label for="setNameInput">Sektionens navn</label>
         <input id="setNameInput" type="text" placeholder="Fx Bærestykke, Rib, Ærme">
-
         <label for="rowsInput">Antal rækker</label>
         <input id="rowsInput" type="number" min="1" inputmode="numeric" placeholder="Fx 20">
-
         <label for="stitchesInput">Antal masker pr. række</label>
         <input id="stitchesInput" type="number" min="1" inputmode="numeric" placeholder="Fx 80">
-
         <label for="notesInput" class="advanced-only">Noter (valgfrit)</label>
         <textarea id="notesInput" class="advanced-only" placeholder="Fx gentag mønster, tag masker ud/ind, osv."></textarea>
 
@@ -489,10 +214,16 @@ button:disabled {
     </div>
 </div>
 
-<!-- Liste over sektioner -->
-<div class="card" id="setsCard">
-    <div id="setListTitle">Sektioner</div>
-    <div id="setsContainer"></div>
+<!-- Liste over sektioner som collapsible box (beige box) -->
+<div class="card expanded" id="setsCard">
+    <div class="collapse-header" id="setsHeader">
+        <div class="collapse-title" id="setListTitle">Sektioner</div>
+        <div class="collapse-arrow" id="setsArrow">▼</div>
+    </div>
+
+    <div class="collapse-body" id="setsBody">
+        <div id="setsContainer"></div>
+    </div>
 </div>
 
 <!-- Rækkehandling + sofa-tilstand -->
@@ -532,8 +263,9 @@ const app = {
     projects: {},
     currentProjectId: null,
     advancedMode: false,
-    insertionIndex: null, // når man indsætter en ny sektion: indsæt efter dette index
+    insertionIndex: null,
     els: {},
+    windowRadius: 2,
 
     init() {
         this.cacheElements();
@@ -555,6 +287,11 @@ const app = {
         this.els.addSetHeader     = document.getElementById("addSetHeader");
         this.els.addSetArrow      = document.getElementById("addSetArrow");
         this.els.addSetBody       = document.getElementById("addSetBody");
+
+        this.els.setsCard         = document.getElementById("setsCard");
+        this.els.setsHeader       = document.getElementById("setsHeader");
+        this.els.setsArrow        = document.getElementById("setsArrow");
+        this.els.setsBody         = document.getElementById("setsBody");
 
         this.els.projectSelect    = document.getElementById("projectSelect");
         this.els.newProjectBtn    = document.getElementById("newProjectBtn");
@@ -632,6 +369,12 @@ const app = {
         this.els.sofaOverlay.addEventListener("click", (e) => {
             if (e.target === this.els.sofaOverlay) this.closeSofaMode();
         });
+
+        // sets-card collapse/expand
+        this.els.setsHeader.addEventListener("click", () => {
+            const isExpanded = this.els.setsCard.classList.contains("expanded");
+            this.toggleCard(this.els.setsCard, this.els.setsBody, this.els.setsArrow, isExpanded);
+        });
     },
 
     initCollapsibles() {
@@ -644,6 +387,11 @@ const app = {
         this.els.addSetCard.classList.remove("expanded");
         this.els.addSetBody.style.display = "none";
         this.els.addSetArrow.textContent = "▶";
+
+        // Sektioner (beige box) start: åben
+        this.els.setsCard.classList.add("expanded");
+        this.els.setsBody.style.display = "block";
+        this.els.setsArrow.textContent = "▼";
 
         this.els.projectHeader.addEventListener("click", () => {
             const isExpanded = this.els.projectCard.classList.contains("expanded");
@@ -678,6 +426,18 @@ const app = {
             this.projects = parsed.projects || {};
             this.currentProjectId = parsed.currentProjectId || null;
             this.advancedMode = !!parsed.advancedMode;
+
+            // Backwards compatibility: init arrays/flags
+            Object.keys(this.projects).forEach(pid => {
+                const p = this.projects[pid];
+                if (!Array.isArray(p.sets)) p.sets = [];
+                p.sets.forEach(s => {
+                    if (!Array.isArray(s.timestamps)) s.timestamps = [];
+                    s.timestamps = s.timestamps.slice(0, Math.max(0, s.rows || 0));
+                    if (typeof s.showTimestamps !== 'boolean') s.showTimestamps = false;
+                    if (typeof s.expanded !== 'boolean') s.expanded = false;
+                });
+            });
         } catch (e) {
             this.projects = {};
             this.currentProjectId = null;
@@ -697,11 +457,7 @@ const app = {
     applyMode() {
         this.els.modeLabel.textContent = this.advancedMode ? "Tilstand: Avanceret" : "Tilstand: Simpel";
         this.els.modeToggleBtn.textContent = this.advancedMode ? "Simpel" : "Avanceret";
-
-        this.els.advancedOnly.forEach(el => {
-            el.style.display = this.advancedMode ? "block" : "none";
-        });
-
+        this.els.advancedOnly.forEach(el => { el.style.display = this.advancedMode ? "block" : "none"; });
         this.save();
         this.updateUI();
     },
@@ -709,12 +465,8 @@ const app = {
     createProject() {
         const name = prompt("Navn på projekt?");
         if (!name) return;
-
         const id = "p_" + Date.now();
-        this.projects[id] = {
-            name: name.trim(),
-            sets: []
-        };
+        this.projects[id] = { name: name.trim(), sets: [] };
         this.currentProjectId = id;
         this.save();
         this.renderProjectsSelect();
@@ -737,7 +489,6 @@ const app = {
         const select = this.els.projectSelect;
         select.innerHTML = "";
         const ids = Object.keys(this.projects);
-
         if (!ids.length) {
             const opt = document.createElement("option");
             opt.value = "";
@@ -746,7 +497,6 @@ const app = {
             select.disabled = true;
             return;
         }
-
         select.disabled = false;
         ids.forEach(id => {
             const p = this.projects[id];
@@ -755,7 +505,6 @@ const app = {
             opt.textContent = p.name || "Uden navn";
             select.appendChild(opt);
         });
-
         if (!this.currentProjectId || !this.projects[this.currentProjectId]) {
             this.currentProjectId = ids[0];
         }
@@ -763,55 +512,34 @@ const app = {
     },
 
     addSet() {
-        if (!this.currentProjectId) {
-            alert("Vælg eller opret et projekt først.");
-            return;
-        }
+        if (!this.currentProjectId) { alert("Vælg eller opret et projekt først."); return; }
 
         const rows = parseInt(this.els.rowsInput.value, 10);
         const stitches = parseInt(this.els.stitchesInput.value, 10);
 
-        if (!rows || rows <= 0) {
-            alert("Angiv et gyldigt antal rækker (mindst 1).");
-            return;
-        }
-        if (!stitches || stitches <= 0) {
-            alert("Angiv et gyldigt antal masker pr. række (mindst 1).");
-            return;
-        }
+        if (!rows || rows <= 0) { alert("Angiv et gyldigt antal rækker (mindst 1)."); return; }
+        if (!stitches || stitches <= 0) { alert("Angiv et gyldigt antal masker pr. række (mindst 1)."); return; }
 
         const p = this.projects[this.currentProjectId];
-        const nameInput = this.els.setNameInput.value.trim();
+        const nameInput = (this.els.setNameInput.value || "").trim();
         const defaultName = this.insertionIndex !== null ? `Sektion ${this.insertionIndex + 2}` : `Sektion ${p.sets.length + 1}`;
         const name = nameInput || defaultName;
         const notes = this.advancedMode ? (this.els.notesInput.value.trim() || "") : "";
 
-        const set = {
-            name,
-            rows,
-            stitches,
-            done: 0,
-            notes
-        };
+        const set = { name, rows, stitches, done: 0, notes, timestamps: [], showTimestamps: false, expanded: true };
 
         if (this.insertionIndex === null) {
             p.sets.push(set);
         } else {
-            // indsæt efter insertionIndex
             p.sets.splice(this.insertionIndex + 1, 0, set);
         }
 
-        // ryd formular
+        // ryd formular men behold add-card åben
         this.els.rowsInput.value = "";
         this.els.stitchesInput.value = "";
         this.els.setNameInput.value = "";
         this.els.notesInput.value = "";
         this.insertionIndex = null;
-
-        // luk add-card og opdater
-        if (this.els.addSetCard.classList.contains("expanded")) {
-            this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, true);
-        }
 
         this.save();
         this.updateUI();
@@ -823,15 +551,16 @@ const app = {
         this.els.stitchesInput.value = "";
         this.els.setNameInput.value = "";
         this.els.notesInput.value = "";
-        // luk add-card
         if (this.els.addSetCard.classList.contains("expanded")) {
             this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, true);
         }
     },
 
-    /* Hjælpere til rækker */
-    getActiveSet(p) {
-        return p.sets.find(s => s.done < s.rows) || null;
+    getActiveSet(p) { return p.sets.find(s => s.done < s.rows) || null; },
+
+    getActiveIndex(p) {
+        const idx = p.sets.findIndex(s => s.done < s.rows);
+        return idx === -1 ? p.sets.length - 1 : idx;
     },
 
     getLastDoneSet(p) {
@@ -847,13 +576,19 @@ const app = {
         if (!p.sets.length) return;
 
         const active = this.getActiveSet(p);
-        if (!active) {
-            alert("Alle rækker i projektet er allerede færdige.");
-            return;
-        }
+        if (!active) { alert("Alle rækker i projektet er allerede færdige."); return; }
 
         if (active.done < active.rows) {
             active.done += 1;
+            if (!Array.isArray(active.timestamps)) active.timestamps = [];
+            active.timestamps.push((new Date()).toISOString());
+            active.showTimestamps = true;
+            active.expanded = true; // åbn aktiv sektion så brugeren ser timestamp
+
+            // hvis hele sets-boxen er kollapset, åbn den så man kan se ændringen
+            if (!this.els.setsCard.classList.contains("expanded")) {
+                this.toggleCard(this.els.setsCard, this.els.setsBody, this.els.setsArrow, true); // true -> currently collapsed, so toggle (will expand)
+            }
         }
 
         this.save();
@@ -868,16 +603,15 @@ const app = {
         if (!last) return;
 
         last.done = Math.max(0, last.done - 1);
+        if (Array.isArray(last.timestamps) && last.timestamps.length > 0) {
+            last.timestamps.pop();
+        }
         this.save();
     },
 
     getProjectSummary(p) {
-        let totalRows = 0;
-        let doneRows = 0;
-        p.sets.forEach(s => {
-            totalRows += s.rows;
-            doneRows += Math.min(s.done, s.rows);
-        });
+        let totalRows = 0; let doneRows = 0;
+        p.sets.forEach(s => { totalRows += s.rows; doneRows += Math.min(s.done, s.rows); });
         const pct = totalRows === 0 ? 0 : Math.round((doneRows / totalRows) * 100);
         return { totalRows, doneRows, pct };
     },
@@ -898,17 +632,26 @@ const app = {
 
         progressBox.innerHTML = `
             ${doneRows} / ${totalRows} rækker færdige (${pct}%)
-            <div class="progress-bar-outer">
-                <div class="progress-bar-inner" style="width:${pct}%;"></div>
-            </div>
+            <div class="progress-bar-outer"><div class="progress-bar-inner" style="width:${pct}%;"></div></div>
         `;
 
+        const activeIndex = this.getActiveIndex(p);
+        const radius = this.windowRadius;
+
         p.sets.forEach((s, index) => {
+            if (!Array.isArray(s.timestamps)) s.timestamps = [];
+            if (typeof s.showTimestamps !== 'boolean') s.showTimestamps = false;
+            if (typeof s.expanded !== 'boolean') s.expanded = false;
+
             const card = document.createElement("div");
             const done = Math.min(s.done, s.rows);
             const setPct = s.rows === 0 ? 0 : Math.round(done / s.rows * 100);
 
+            const inWindow = (index >= activeIndex - radius) && (index <= activeIndex + radius);
+            const collapsed = (!inWindow && !s.expanded);
+
             card.className = "set-card" + (done >= s.rows ? " done" : "");
+            if (collapsed) card.classList.add("collapsed");
 
             const header = document.createElement("div");
             header.className = "set-header";
@@ -917,7 +660,6 @@ const app = {
             nameEl.className = "set-name";
             nameEl.textContent = s.name || `Sektion ${index + 1}`;
 
-            // højre side indeholder status + handlinger
             const rightSide = document.createElement("div");
             rightSide.style.display = "flex";
             rightSide.style.alignItems = "center";
@@ -927,7 +669,6 @@ const app = {
             statusEl.className = "set-status";
             statusEl.textContent = `${done} / ${s.rows} rækker`;
 
-            // actions: åbner inline "Tilføj sektion" med forudfyldte værdier, eller slet
             const actions = document.createElement("div");
             actions.className = "set-actions";
 
@@ -935,19 +676,13 @@ const app = {
             insertBtn.className = "small-btn";
             insertBtn.textContent = "Indsæt";
             insertBtn.title = "Indsæt en ny sektion efter denne";
-            insertBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                this.openInsertForm(index);
-            });
+            insertBtn.addEventListener("click", (e) => { e.stopPropagation(); this.openInsertForm(index); });
 
             const deleteBtn = document.createElement("button");
             deleteBtn.className = "small-btn danger";
             deleteBtn.textContent = "Slet";
             deleteBtn.title = "Slet denne sektion";
-            deleteBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                this.deleteSet(index);
-            });
+            deleteBtn.addEventListener("click", (e) => { e.stopPropagation(); this.deleteSet(index); });
 
             actions.appendChild(insertBtn);
             actions.appendChild(deleteBtn);
@@ -958,13 +693,18 @@ const app = {
             header.appendChild(nameEl);
             header.appendChild(rightSide);
 
+            header.addEventListener("click", () => {
+                s.expanded = !s.expanded;
+                if (s.expanded) s.showTimestamps = true;
+                this.save();
+                this.updateUI();
+            });
+
             const meta = document.createElement("div");
             meta.className = "set-meta";
             meta.innerHTML = `
                 ${s.rows} rækker × ${s.stitches} masker
-                <div>
-                    <span class="chip">${setPct}% af sektionen</span>
-                </div>
+                <div><span class="chip">${setPct}% af sektionen</span></div>
             `;
 
             card.appendChild(header);
@@ -976,6 +716,52 @@ const app = {
                 notes.textContent = s.notes;
                 card.appendChild(notes);
             }
+
+            const timestampsToggle = document.createElement("div");
+            timestampsToggle.className = "timestamps-toggle";
+
+            const tsBtn = document.createElement("button");
+            tsBtn.type = "button";
+            const tsCount = Math.min(s.timestamps.length, done);
+            tsBtn.textContent = s.showTimestamps ? `Skjul rækker (${tsCount})` : `Vis rækker (${tsCount})`;
+
+            const list = document.createElement("div");
+            list.className = "timestamps-list";
+            if (s.showTimestamps) list.classList.add("visible");
+
+            tsBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const nowVisible = !list.classList.contains("visible");
+                if (nowVisible) {
+                    list.classList.add("visible");
+                    tsBtn.textContent = `Skjul rækker (${tsCount})`;
+                    s.expanded = true;
+                } else {
+                    list.classList.remove("visible");
+                    tsBtn.textContent = `Vis rækker (${tsCount})`;
+                }
+                s.showTimestamps = nowVisible;
+                this.save();
+                this.updateUI();
+            });
+
+            timestampsToggle.appendChild(tsBtn);
+
+            for (let i = 0; i < tsCount; i++) {
+                const iso = s.timestamps[i];
+                const item = document.createElement("div");
+                item.className = "timestamp-item";
+                let label = iso;
+                try {
+                    const d = new Date(iso);
+                    label = d.toLocaleString('da-DK', { dateStyle: 'short', timeStyle: 'short' });
+                } catch (e) {}
+                item.textContent = `Række ${i + 1} — ${label}`;
+                list.appendChild(item);
+            }
+
+            timestampsToggle.appendChild(list);
+            card.appendChild(timestampsToggle);
 
             container.appendChild(card);
         });
@@ -989,86 +775,60 @@ const app = {
         this.els.sofaModeBtn.disabled = disabled;
     },
 
-    /* Tilføj / indsæt / slet sektioner (mobil-optimeret: inline formular) */
     openInsertForm(index) {
         if (!this.currentProjectId) return;
         const p = this.projects[this.currentProjectId];
         this.insertionIndex = index;
-
-        // forudfyld felter med fornuftige værdier
         const suggestedName = `Sektion ${index + 2}`;
         this.els.setNameInput.value = suggestedName;
-        this.els.rowsInput.value = "";
-        this.els.stitchesInput.value = "";
-
-        // sørg for add-card er åben og fokuser på rækker (mobil: viser keyboard)
+        const after = p.sets[index];
+        if (after) {
+            this.els.rowsInput.value = Math.max(1, Math.round(after.rows));
+            this.els.stitchesInput.value = Math.max(1, Math.round(after.stitches));
+        } else {
+            this.els.rowsInput.value = "";
+            this.els.stitchesInput.value = "";
+        }
         if (!this.els.addSetCard.classList.contains("expanded")) {
             this.toggleCard(this.els.addSetCard, this.els.addSetBody, this.els.addSetArrow, false);
         }
-
-        // scroll add-card i midten af viewport og fokus input
-        setTimeout(() => {
-            this.els.addSetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            this.els.rowsInput.focus();
-        }, 120);
     },
 
     deleteSet(index) {
         if (!this.currentProjectId) return;
         const p = this.projects[this.currentProjectId];
         const s = p.sets[index];
-        if (!s) return;
-        const ok = confirm(`Vil du slette sektionen "${s.name}"?`);
+        const ok = confirm(`Vil du slette sektionen "${s.name || 'uden navn'}"? Dette sletter også eventuelle tidsstempler for sektionen.`);
         if (!ok) return;
         p.sets.splice(index, 1);
         this.save();
         this.updateUI();
     },
 
-    /* Sofa-/mørketilstand */
     openSofaMode() {
-        if (!this.currentProjectId || !this.projects[this.currentProjectId]) return;
-        const p = this.projects[this.currentProjectId];
-        if (!p.sets.length) return;
-
+        if (!this.currentProjectId) return;
+        this.els.sofaOverlay.classList.add("visible");
         this.updateSofaOverlay();
-
-        this.els.sofaOverlay.style.display = "block";
-        requestAnimationFrame(() => {
-            this.els.sofaOverlay.classList.add("visible");
-        });
     },
 
     closeSofaMode() {
         this.els.sofaOverlay.classList.remove("visible");
-        setTimeout(() => {
-            this.els.sofaOverlay.style.display = "none";
-        }, 250);
     },
 
     updateSofaOverlay() {
-        if (!this.currentProjectId || !this.projects[this.currentProjectId]) return;
+        if (!this.currentProjectId) return;
         const p = this.projects[this.currentProjectId];
-        const { totalRows, doneRows } = this.getProjectSummary(p);
         const active = this.getActiveSet(p);
-
-        this.els.sofaProjectName.textContent = p.name || "Projekt";
-
-        if (!active) {
-            this.els.sofaSectionName.textContent = "Alle sektioner færdige";
-            this.els.sofaRowText.textContent = "🎉";
-            this.els.sofaSubText.textContent = `${doneRows} / ${totalRows} rækker færdige`;
-            this.els.sofaNextBtn.disabled = true;
-            this.els.sofaUndoBtn.disabled = doneRows === 0;
-            return;
+        this.els.sofaProjectName.textContent = p.name || "Uden navn";
+        if (active) {
+            this.els.sofaSectionName.textContent = active.name || "";
+            this.els.sofaRowText.textContent = `Række ${Math.min(active.done + 1, active.rows)}`;
+            this.els.sofaSubText.textContent = `${Math.min(active.done, active.rows)} / ${active.rows} færdige`;
+        } else {
+            this.els.sofaSectionName.textContent = "";
+            this.els.sofaRowText.textContent = `Færdig`;
+            this.els.sofaSubText.textContent = "Ingen flere rækker";
         }
-
-        this.els.sofaSectionName.textContent = active.name;
-        this.els.sofaRowText.textContent = `Række ${active.done + 1}`;
-        this.els.sofaSubText.textContent = `${active.done} / ${active.rows} rækker • ${active.stitches} masker`;
-
-        this.els.sofaNextBtn.disabled = false;
-        this.els.sofaUndoBtn.disabled = doneRows === 0;
     }
 };
 
